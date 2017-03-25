@@ -9,7 +9,7 @@ export default class Template {
 
     this.attributeBuilders.forEach(attributeBuilder => {
       const node = attributeBuilder.resolveNode(element);
-      const attribute = attributes.find((attr)=>attributeBuilder.isChildAttribute(attr));
+      const attribute = attributes.find((attr)=>attributeBuilder.isChild(attr));
       attribute.attachTo(node);
     });
 

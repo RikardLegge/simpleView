@@ -1,19 +1,18 @@
 import domTemplate from "./domTemplate";
 import viewTemplate from "./viewTemplate";
-import click from "./attributes/click";
 import write from "./attributes/write";
 import edit from "./attributes/edit";
+import child from "./attributes/child";
 import * as Model from "./Model";
-import Property from "./Property";
+import {Property} from "./Property";
+import ExampleButton from "./primitive-views/ExampleButton";
 
 function uppercase(value) {
   return value.toUpperCase();
 }
 
 class ExampleView extends domTemplate`
-  <div>
-    <button ${click('add')}></button>
-  </div>
+  ${child(new ExampleButton('add', {model:Model.simple({text: 'clear'})}))}
   <div ${write('title', {transform: uppercase})}></div>
   <input ${edit('title')}>
 ` {
@@ -28,7 +27,7 @@ class ExampleModel extends Model.define({
   title: new Property(),
   login: new Property({
     get() { return 'hej'; },
-    set(value) { this[Model.set]('title', value); }
+    set(value) { this[Property.set]('title', value); }
   })
 }) {
   constructor(){
@@ -40,7 +39,7 @@ class ExampleModel extends Model.define({
 const exampleModel = new ExampleModel();
 const composite = new ExampleComposite({
   exampleView: new ExampleView({
-    signal: {add: () => exampleModel.title = ''},
+    signal: {add() { exampleModel.title = ''}},
     model: exampleModel
   })
 });

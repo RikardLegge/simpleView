@@ -19,7 +19,7 @@ export default class AttributeFactory {
     return node;
   }
 
-  isChildAttribute(attribute) {
+  isChild(attribute) {
     return attribute.id === this.id;
   }
 }

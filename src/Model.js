@@ -1,8 +1,7 @@
 import EventSource from "./EventSource";
+import * as Property from "./Property";
 
 const properties = Symbol('Model.properties');
-export const set = Symbol('Model.set');
-export const get = Symbol('Model.get');
 
 export class Model {
   constructor() {
@@ -14,11 +13,11 @@ export class Model {
     this[properties] = {};
   }
 
-  [get](key) {
+  [Property.get](key) {
     return this[properties][key];
   }
 
-  [set](key, value) {
+  [Property.set](key, value) {
     const oldValue = this[properties][key];
     this[properties][key] = value;
     this.changed.dispatch(key, value, oldValue);
@@ -40,4 +39,20 @@ export function define(properties) {
   }
 
   return ModelInstance;
+}
+
+export function simple(keyValues) {
+  const definition = Object.keys(keyValues).reduce((acc, key) =>{
+    acc[key] = new Property.Property();
+    return acc;
+  }, {});
+
+  return new class extends define(definition) {
+    constructor(){
+      super();
+      Object.entries(keyValues).forEach(([key, value])=>{
+        this[key] = value;
+      });
+    }
+  }
 }

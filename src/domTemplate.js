@@ -6,7 +6,7 @@ export default function domTemplate(templateArray, ...attributeBuilders) {
   const template = new Template(templateArray, attributeBuilders);
 
   return class {
-    constructor(options) {
+    constructor(options = {}) {
       this.model = options.model;
 
       const attributes = attributeBuilders.map(attributeBuilder => attributeBuilder.create(this));

@@ -1,14 +1,15 @@
-import * as Model from "./Model";
+export const set = Symbol('Property.set');
+export const get = Symbol('Property.get');
 
 function defaultSet(propertyName, value) {
-  return this[Model.set](propertyName, value);
+  return this[set](propertyName, value);
 }
 
 function defaultGet(propertyName) {
-  return this[Model.get](propertyName);
+  return this[get](propertyName);
 }
 
-export default class Property {
+export class Property {
   constructor(desc={get: defaultGet, set: defaultSet}) {
     this.desc = desc;
   }
