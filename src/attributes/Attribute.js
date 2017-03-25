@@ -1,7 +1,11 @@
 export default class Attribute {
-  constructor(options) {
-    this.id = options.id;
+  constructor() {
+    this.id = null;
     this.element = null;
+  }
+  
+  setId(id) {
+    this.id = id;
   }
 
   attachTo(element) {

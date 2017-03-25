@@ -1,12 +1,14 @@
 import AttributeFactory from "./AttributeFactory";
 import Attribute from "./Attribute";
 
-export default function click(signal, options={}) {
+export default function click(signal, {}={}) {
 
   return new AttributeFactory('click', (id, view)=>{
-    options.id = id;
+    const attribute = new ClickEventListener(onClick);
+    attribute.setId(id);
 
-    return new ClickEventListener(onClick, options);
+    return attribute;
+
     function onClick() {
       view.signal.dispatch(signal);
     }
@@ -14,8 +16,8 @@ export default function click(signal, options={}) {
 }
 
 class ClickEventListener extends Attribute {
-  constructor(onClick, options) {
-    super(options);
+  constructor(onClick) {
+    super();
     this.onClick = onClick;
   }
 

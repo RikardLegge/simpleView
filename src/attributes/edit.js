@@ -1,10 +1,11 @@
 import AttributeFactory from "./AttributeFactory";
 import Attribute from "./Attribute";
 
-export default function edit(key, options = {}) {
+export default function edit(key, {} = {}) {
   return new AttributeFactory('edit', (id, view)=>{
-    options.id = id;
-    const attribute = new EditAttribute(getValue, setValue, options);
+    const attribute = new EditAttribute(getValue, setValue);
+    attribute.setId(id);
+    
     view.model.changed.on((prop)=>prop === key && attribute.refresh());
     return attribute;
 
@@ -18,8 +19,8 @@ export default function edit(key, options = {}) {
 }
 
 class EditAttribute extends Attribute {
-  constructor(getValue, setValue, options) {
-    super(options);
+  constructor(getValue, setValue) {
+    super();
     this.onChange = ()=>setValue(this.element.value);
     this.getValue = getValue;
   }
