@@ -5,14 +5,14 @@ import edit from "./attributes/edit";
 import child from "./attributes/child";
 import * as Model from "./Model";
 import {Property} from "./Property";
-import ExampleButton from "./primitive-views/ExampleButton";
+import AddButton from "./primitive-views/AddButton";
 
 function uppercase(value) {
   return value.toUpperCase();
 }
 
 class ExampleView extends domTemplate`
-  ${child(new ExampleButton('add', {model:Model.simple({text: 'clear'})}))}
+  ${child(new AddButton())}
   <div ${write('title', {transform: uppercase})}></div>
   <input ${edit('title')}>
 ` {

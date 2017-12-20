@@ -7,20 +7,29 @@ export default function domTemplate(templateArray, ...attributeBuilders) {
 
   return class {
     constructor(options = {}) {
-      this.model = options.model;
+      this.signalMap = options.signal || {};
+      this.dataMap = options.dataMap || {};
+      this.context = options.context || new DomContext({model: options.model});
 
       const attributes = attributeBuilders.map(attributeBuilder => attributeBuilder.create(this));
       this.element = template.createElement(attributes);
-      this.signal = this.createSignalSource(options.signal);
+      
+      this.attachSignalSource(this.signalMap);
     }
 
-    createSignalSource(signalMap = {}) {
-      const signal = new EventSource();
-      signal.on(event => {
+    attachSignalSource(signalMap = {}) {
+      this.context.signal.on(event => {
         const signalHandler = signalMap[event] || voidFunc;
         signalHandler();
       });
-      return signal;
     }
+
   };
+}
+
+class DomContext {
+  constructor(options = {}) {
+    this.model = options.model;
+    this.signal = new EventSource();
+  }
 }

@@ -9,11 +9,11 @@ export default function write(key, {
     const attribute = new WriteAttribute(getValue);
     attribute.setId(id);
     
-    view.model.changed.on((prop)=>prop === key && attribute.refresh());
+    view.context.model.changed.on((prop)=>prop === key && attribute.refresh());
     return attribute;
 
     function getValue() {
-      const value = view.model[key];
+      const value = view.context.model[key];
       return transform(value);
     }
   });

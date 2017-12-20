@@ -6,14 +6,14 @@ export default function edit(key, {} = {}) {
     const attribute = new EditAttribute(getValue, setValue);
     attribute.setId(id);
     
-    view.model.changed.on((prop)=>prop === key && attribute.refresh());
+    view.context.model.changed.on((prop)=>prop === key && attribute.refresh());
     return attribute;
 
     function getValue() {
-      return view.model[key];
+      return view.context.model[key];
     }
     function setValue(value) {
-      return view.model[key] = value;
+      return view.context.model[key] = value;
     }
   });
 }

@@ -7,7 +7,7 @@ export default function child(elementView, {}={}) {
     const value = new ChildElement(elementView, view);
     value.setId(id);
 
-    elementView.parent = view;
+    elementView.context = view.context;
 
     return value;
   });

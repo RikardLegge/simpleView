@@ -10,7 +10,7 @@ export default function click(signal, {}={}) {
     return attribute;
 
     function onClick() {
-      view.signal.dispatch(signal);
+      view.context.signal.dispatch(signal);
     }
   });
 }
